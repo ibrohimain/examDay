@@ -12,7 +12,7 @@ import Checkout from './components/shoop/Checkout/Checkout'
 
 const App = () => {
   return (
-    <div className='max-w-[1500px] w-[1500px] borde mx-auto'>
+    <div className='max-w-[1500px] w-[1500px] mx-auto'>
       <Header />
       <Routes>
         <Route path='/' element={<Home/>} />
