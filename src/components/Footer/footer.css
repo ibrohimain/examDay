@@ -1,0 +1,8 @@
+.bgSize{
+    width: 80px;
+    height: 80px;
+    background-image: url(./footer_img/bg.png);
+    background-size: 100% 100%;
+    object-fit: cover;
+    
+}

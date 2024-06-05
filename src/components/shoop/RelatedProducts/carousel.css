@@ -1,0 +1,11 @@
+/* Add this CSS to your stylesheet or include it in a <style> tag */
+
+.group:hover .overlay {
+    opacity: 1;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
