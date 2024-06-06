@@ -5,7 +5,7 @@ import './category.css';
 import AllPlants from './AllPlants';
 import NevArivals from './NevArivals';
 import Sale from './categoria_img/Sale';
-import { Data } from '../../../redux/data';
+import { Data } from '../../../data';
 
 const ITEMS_PER_PAGE = 9;
 

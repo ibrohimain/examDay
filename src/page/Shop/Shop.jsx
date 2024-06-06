@@ -1,5 +1,4 @@
 import React from 'react'
-import Shoop from '../../components/shoop/Shoop'
 import ProductRelated from '../../components/shoop/RelatedProducts/ProductReleted'
 import gif from './shop_img/giphy-unscreen.gif'
 

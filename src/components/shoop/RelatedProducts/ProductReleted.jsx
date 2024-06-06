@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaShoppingCart, FaSearch, FaHeart } from "react-icons/fa";
-import { Data } from "../../../redux/data";
+import { Data } from "../../../data";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";

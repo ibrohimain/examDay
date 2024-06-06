@@ -1,5 +1,5 @@
-import kaktus from '../components/Footer/footer_img/cactus.png'
-import choynak from '../components/Footer/footer_img/choynak.png'
+import kaktus from './components/Footer/footer_img/cactus.png'
+import choynak from './components/Footer/footer_img/choynak.png'
 
 export const footerData = [
     {

@@ -2,7 +2,6 @@ import { FaFacebookF } from 'react-icons/fa';
 import { Instagram, Twitter, YouTube } from '@mui/icons-material';
 import { LiaLinkedinIn } from 'react-icons/lia';
 import { Link } from 'react-router-dom';
-import { } from '../../redux/footerData';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import PhoneIcon from '@mui/icons-material/Phone';
 import message from './footer_img/Message.png'
@@ -12,7 +11,7 @@ import americanExpress from './footer_img/americanexpress-removebg-preview.png'
 import paypay from './footer_img/paypay.png'
 import logo from '../../assets/GreenShopLogo-min.png'
 import './footer.css'
-import { footerData } from '../../redux/footerData';
+import { footerData } from '../../footerData';
 
 const Footer = () => {
     return (

@@ -16,10 +16,10 @@ import PlantCare from './page/PlantCare/PlantCare'
 const App = () => {
   return (
     <div className='max-w-[1500px] w-[1500px] mx-auto'>
-      <Header/>
-      
+      <Header />
+
       <Routes>
-        <Route path='/' element={<Home/>} />
+        <Route path='/' element={<Home />} />
         <Route path='/shoop/:id' element={<Shoop />} />
         <Route path='/plantcare' element={<PlantCare />} />
         <Route path='/shop' element={<Shop />} />

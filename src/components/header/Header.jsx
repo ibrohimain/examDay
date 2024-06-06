@@ -8,8 +8,8 @@ import Avatar from '@mui/material/Avatar'; // Using MUI Avatar for user icon
 import { FcGoogle } from 'react-icons/fc';
 import { RiFacebookFill } from 'react-icons/ri';
 import { FaHeart, FaSearch, FaShoppingCart } from 'react-icons/fa';
-import { Data } from '../../redux/data';
 import { useDispatch, useSelector } from 'react-redux';
+import { Data } from '../../data';
 
 const Header = () => {
 
