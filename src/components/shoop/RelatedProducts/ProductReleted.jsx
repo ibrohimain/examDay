@@ -6,9 +6,12 @@ import { FaShoppingCart, FaSearch, FaHeart } from "react-icons/fa";
 import { Data } from "../../../redux/data";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 
 const ProductRelated = () => {
+    const navigate = useNavigate()
+
 
 
     const dispatch = useDispatch();
@@ -48,7 +51,7 @@ const ProductRelated = () => {
                                 <div className="overlay absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
                                     <div className="text-white text-2xl flex space-x-4 absolute top-[85%]">
                                         <FaShoppingCart className="cursor-pointer " onClick={() => handleAddToCart(item)} />
-                                        <FaSearch className="cursor-pointer" />
+                                        <FaSearch className="cursor-pointer" onClick={() => navigate(`/shoop/${item.id}`)} />
                                         <FaHeart className="cursor-pointer" />
                                     </div>
                                 </div>

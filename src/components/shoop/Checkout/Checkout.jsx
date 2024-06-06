@@ -124,7 +124,7 @@ const Checkout = () => {
         <>
             <ul className='w-[85%] mx-auto flex gap-3'>
                 <li>Home /</li>
-                <li className='font-semibold'><Link to='/shop'>Shop</Link> /</li>
+                <li className='font-semibold'><Link to='/shoop'>Shop</Link> /</li>
                 <li>Checkout</li>
             </ul>
             <div className='w-[85%] mx-auto flex justify-between'>

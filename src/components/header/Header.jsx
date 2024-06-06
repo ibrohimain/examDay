@@ -7,15 +7,34 @@ import exit from '../../assets/Logout.png';
 import Avatar from '@mui/material/Avatar'; // Using MUI Avatar for user icon
 import { FcGoogle } from 'react-icons/fc';
 import { RiFacebookFill } from 'react-icons/ri';
-import { Search } from '@mui/icons-material';
+import { FaHeart, FaSearch, FaShoppingCart } from 'react-icons/fa';
+import { Data } from '../../redux/data';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Header = () => {
+
+  const dispatch = useDispatch();
+  const [qty, setQty] = useState(1);
+  const cart = useSelector((state) => state.cart.data);
+
+  const handleAddToCart = (product) => {
+    let totalPrice = qty * product.price;
+    const tempProduct = {
+      ...product,
+      quantity: qty,
+      totalPrice,
+    };
+    dispatch(addToCart(tempProduct));
+  };
+
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [alreadyLoggedInMessage, setAlreadyLoggedInMessage] = useState('');
   const [showSearchInput, setShowSearchInput] = useState(false);
-  const searchInputRef = useRef(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const searchContainerRef = useRef(null);
   const searchIconRef = useRef(null);
   const navigate = useNavigate();
 
@@ -43,8 +62,12 @@ const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (searchInputRef.current && !searchInputRef.current.contains(event.target) &&
-        searchIconRef.current && !searchIconRef.current.contains(event.target)) {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target) &&
+        searchIconRef.current &&
+        !searchIconRef.current.contains(event.target)
+      ) {
         setShowSearchInput(false);
       }
     };
@@ -147,6 +170,14 @@ const Header = () => {
     setShowSearchInput(!showSearchInput);
   };
 
+  // Search products function
+  const searchProducts = (query) => {
+    const filteredData = Data.filter((item) =>
+      item.common_name.toLowerCase().includes(query.toLowerCase())
+    );
+    return filteredData;
+  };
+
   return (
     <>
       <div className='w-[85%] h-[70px] mx-auto flex justify-between items-center border-b'>
@@ -165,13 +196,13 @@ const Header = () => {
               <Link to='/'>Home</Link>
             </li>
             <li className='list font-medium text-[gray] text-[17px] cursor-pointer transition duration-150 ease-out md:ease-in hover:text-[black] border-white border-b-[3px] hover:border-green-500'>
-              <Link to='/shoop'>Shop</Link>
+              <Link to='/shop'>Shop</Link>
             </li>
             <li className='list font-medium text-[gray] text-[17px] cursor-pointer transition duration-150 ease-out md:ease-in hover:text-[black] border-white border-b-[3px] hover:border-green-500'>
-              Plant Care
+              <Link to='/plantcare'> Plant Care</Link>
             </li>
             <li className='list font-medium text-[gray] text-[17px] cursor-pointer transition duration-150 ease-out md:ease-in hover:text-[black] border-white border-b-[3px] hover:border-green-500'>
-              Blogs
+              <Link to='/blogs'>Blogs</Link>
             </li>
           </ul>
         </div>
@@ -180,20 +211,9 @@ const Header = () => {
             <li className='cursor-pointer' ref={searchIconRef} onClick={handleSearchIconClick}>
               <img src={SearchIcon} alt="Search" className='w-[25px] h-[25px]' />
             </li>
-            {showSearchInput && (
-              <li>
-                <div ref={searchInputRef} className='w-[550px] absolute left-[35%] top-[1.5%] h-[46px] flex items-center gap-3'>
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className="w-[500px] outline-none h-[45px] border rounded px-2"
-                  />
-                  <Search sx={{ color: "grey", fontSize: "28px", cursor: "pointer" }} />
-                </div>
-              </li>
-            )}
-            <li className='cursor-pointer'>
-              <Link to='shooppingcard'><img src={Shop} alt="Shop" className='w-[25px] h-[25px]' /></Link>
+            <li className='cursor-pointer relative'>
+              <span className=' absolute w-[15px] h-[15px] rounded-[50%] bg-green-500 left-[70%] text-white flex items-center justify-center text-[10px]'>{cart.length}</span>
+              <Link to='shooppingcard'><img src={Shop} alt="Shop" className='w-[25px] h-[25px] ' /></Link>
             </li>
             <li className='cursor-pointer'>
               {isLoggedIn ? (
@@ -203,19 +223,17 @@ const Header = () => {
                   onClick={handleLoginButtonClick}
                   className='w-[100px] h-[40px] outline-none rounded-[10px] bg-green-600 flex justify-center items-center gap-3 font-semibold text-white'
                 >
-                  <img src={exit} alt="Login" className='w-[20px] h-[20px]' />
+                  <img src={exit} alt="Login" className='w-[20px] h-[20px] ' />
                   Login
                 </button>
               )}
             </li>
+            <button className='md:hidden flex items-center'>
+              <img src="https://www.svgrepo.com/show/349502/hamburger-menu.svg" alt="Menu" className='w-[30px] h-[30px]' />
+            </button>
           </ul>
         </div>
-        <div className='md:hidden flex items-center'>
-          <button onClick={() => setShowLoginModal(!showLoginModal)}>
-            <img src="/path/to/hamburger-icon.png" alt="Menu" className='w-[30px] h-[30px]' />
-          </button>
-        </div>
-      </div>
+      </div >
 
       {showLoginModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={closeModal}>
@@ -322,7 +340,39 @@ const Header = () => {
             </div>
           </div>
         </div>
-      )}
+      )
+      }
+
+      {
+        showSearchInput && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={() => setShowSearchInput(false)}>
+            <div ref={searchContainerRef} className="bg-white w-[1200px] overflow-y-scroll h-[600px] rounded-md shadow-lg flex flex-col items-center " onClick={(e) => e.stopPropagation()}>
+              <input type="text" className="w-[200px] mt-[15px] mb-[10px] h-[45px] outline-none border border-black rounded-[5px] px-2" placeholder="Search..." onChange={(e) => setSearchResults(searchProducts(e.target.value))} />
+              <div className='grid grid-cols-4 mt-[50px]'>
+                {searchResults.map((item, index) => (
+                  <div key={index} className="w-[250px] h-[280px]">
+                    <div className="relative group w-[90%] h-[200px] mx-auto cursor-pointer">
+                      <img src={item.image_url} alt="" className="w-full h-full" />
+                      <div className="overlay absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                        <div className="text-white text-2xl flex space-x-4 absolute top-[85%]">
+                          <FaShoppingCart className="cursor-pointer " onClick={() => handleAddToCart(item)} />
+                          <FaSearch className="cursor-pointer" onClick={() => navigate(`/shoop/${item.id}`)} />
+                          <FaHeart className="cursor-pointer" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="w-[90%] mx-auto">
+                      <h2 className="text-[18px] text-[#464545] mt-[15px]">{item.common_name}</h2>
+                      <span className="font-semibold text-green-500">${item.price}.00</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-center text-xl font-semibold mt-2">Search Content</p>
+            </div>
+          </div>
+        )
+      }
     </>
   );
 };

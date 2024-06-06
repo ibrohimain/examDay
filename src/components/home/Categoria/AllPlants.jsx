@@ -4,8 +4,11 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaShoppingCart, FaSearch, FaHeart } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AllPlants = ({ currentItems, currentPage, totalPages, handleNext, handlePrevious, renderPagination }) => {
+
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [qty, setQty] = useState(1);
 
@@ -30,7 +33,7 @@ const AllPlants = ({ currentItems, currentPage, totalPages, handleNext, handlePr
                                 <div className='text-white text-2xl flex space-x-4 absolute top-[82%]'>
                                     <ul className='flex gap-2'>
                                         <li className='rounded bg-[#ededed] flex justify-center items-center w-[40px] h-[40px]'><FaShoppingCart className='text-black' onClick={() => handleAddToCart(item)} /></li>
-                                        <li className='rounded bg-[#ededed] flex justify-center items-center w-[40px] h-[40px]'><FaSearch className='text-black' /></li>
+                                        <li className='rounded bg-[#ededed] flex justify-center items-center w-[40px] h-[40px]'><FaSearch className='text-black' onClick={() => navigate(`/shoop/${item.id}`)}  /></li>
                                         <li className='rounded bg-[#ededed] flex justify-center items-center w-[40px] h-[40px]'><FaHeart className='text-black' /></li>
                                     </ul>
                                 </div>
